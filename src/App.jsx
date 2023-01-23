@@ -2,11 +2,14 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 
 
-const App = () => {
+const App = ({ sendData }) => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 
 	const onSubmit = (data) => {
 		console.log(data);
+
+		sendData(data)
+
 	}
 	return (
 		<div className="container">
@@ -18,8 +21,13 @@ const App = () => {
 
 					<form onSubmit={handleSubmit(onSubmit)}>
 
-						<input placeholder="@username" type="text" {...register("username")} />
-						<input type="submit" />
+						<input className='form-control' placeholder="@username" type="text" {...register("username", { required: true, minLength: 10, maxLength: 10 })} />
+						{errors.username && <p>error: {errors.username.message} {errors.username.type}</p>}
+
+						<input className='form-control' placeholder="email" type="text" {...register("email", { required: true, pattern: new RegExp("[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}$") })} />
+						{errors.email && <p>error: {errors.email.message} {errors.email.type}</p>}
+
+						<input type="submit" className='btn btn-primary' />
 
 					</form>
 
