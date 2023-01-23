@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 const App = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 
+	const onSubmit = (data) => {
+		console.log(data);
+	}
 	return (
 		<div className="container">
 			<div className="row">
@@ -13,9 +16,9 @@ const App = () => {
 
 					<h3>Formulario:</h3>
 
-					<form >
+					<form onSubmit={handleSubmit(onSubmit)}>
 
-						<input type="text" />
+						<input placeholder="@username" type="text" {...register("username")} />
 						<input type="submit" />
 
 					</form>
